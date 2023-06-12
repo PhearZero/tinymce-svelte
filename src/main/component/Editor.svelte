@@ -10,7 +10,7 @@
       scriptLoaded: false,
       injected: false
     };
- 
+
     const injectScript = (scriptId: string, doc: Document, url: string, cb: () => void) => {
       state.injected = true;
       const script = doc.createElement('script');
@@ -57,16 +57,16 @@
   export let value: string = '';
   export let text: string = '';
   export let cssClass: string = 'tinymce-wrapper';
-  
+
   let container: HTMLElement;
   let element: HTMLElement;
   let editorRef: any;
-  
+
   let lastVal = value;
   let disablindCache = disabled;
-  
+
   const dispatch = createEventDispatcher();
-  
+
   $: {
     if (editorRef && lastVal !== value) {
       editorRef.setContent(value);
@@ -81,7 +81,7 @@
       }
     }
   }
-  
+
   const getTinymce = () => {
     const getSink = () => {
       return typeof window !== 'undefined' ? window : global;
@@ -89,7 +89,7 @@
     const sink = getSink();
     return sink && sink.tinymce ? sink.tinymce : null;
   };
-  
+
   const init = () => {
     //
     const finalInit = {
@@ -119,7 +119,7 @@
     element.style.visibility = '';
     getTinymce().init(finalInit);
   };
-  
+
   onMount(() => {
     if (getTinymce() !== null) {
       init();
@@ -136,12 +136,12 @@
       getTinymce()?.remove(editorRef);
     }
   });
-  
+
 </script>
 <div bind:this={container} class={cssClass}>
 {#if inline}
   <div id={id} bind:this={element}></div>
 {:else}
-  <textarea id={id} bind:this={element} style="visibility:hidden"></textarea>
+  <textarea id={id} bind:this={element} style="visibility:hidden" {...$$restProps}></textarea>
 {/if}
 </div>
